@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BBAI — Black Bear AI</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#060816;--bg2:#0b1023;--panel:rgba(11,16,35,.72);--border:rgba(88,224,255,.24);--text:#e6f7ff;--muted:#7e97b8;--cyan:#58e0ff;--pink:#ff4fd8;--lime:#c9ff4f;--danger:#ff6b7d}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 30% 20%,rgba(255,79,216,.12),transparent 40%),radial-gradient(circle at 70% 80%,rgba(88,224,255,.1),transparent 40%)}
+.hero h1{font-size:clamp(3rem,10vw,6rem);font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 60px rgba(88,224,255,.3);filter:drop-shadow(0 0 30px rgba(88,224,255,.2))}
+.hero .sub{font-size:1.1rem;color:var(--muted);margin:8px 0 4px}
+.hero .tagline{font-size:1.3rem;color:var(--text);margin-bottom:32px}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:12px 28px;border-radius:8px;font-weight:600;font-size:1rem;border:none;cursor:pointer;transition:.2s}
+.btn-primary{background:linear-gradient(135deg,var(--cyan),var(--pink));color:#060816}
+.btn-outline{background:transparent;border:1.5px solid var(--cyan);color:var(--cyan)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(88,224,255,.3)}
+
+/* Sections */
+section{padding:80px 0}
+section h2{font-size:2rem;text-align:center;margin-bottom:48px;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* About */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center;transition:.3s}
+.card:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 0 30px rgba(88,224,255,.12)}
+.card .icon{font-size:2.4rem;margin-bottom:12px}
+.card h3{color:var(--cyan);margin-bottom:8px}
+.card p{color:var(--muted);font-size:.95rem}
+
+/* How it works */
+.steps{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;counter-reset:step}
+.step{flex:1;min-width:200px;max-width:280px;text-align:center;position:relative;padding:24px}
+.step::before{counter-increment:step;content:counter(step);display:block;width:48px;height:48px;line-height:48px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--pink));color:var(--bg);font-weight:700;font-size:1.2rem;margin:0 auto 16px}
+.step h3{margin-bottom:8px}
+.step p{color:var(--muted);font-size:.9rem}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.stat{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:24px;text-align:center}
+.stat .val{font-size:2rem;font-weight:700;color:var(--lime);font-family:'Courier New',monospace}
+.stat .label{color:var(--muted);font-size:.85rem;margin-top:4px}
+
+/* Addresses */
+.addr-table{width:100%;border-collapse:collapse}
+.addr-table th,.addr-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.addr-table th{color:var(--cyan);font-size:.85rem;text-transform:uppercase}
+.addr-table td{font-family:'Courier New',monospace;font-size:.85rem;word-break:break-all}
+
+/* Community */
+.links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.links a{display:inline-block;padding:12px 24px;border:1px solid var(--border);border-radius:8px;transition:.2s}
+.links a:hover{border-color:var(--cyan);background:rgba(88,224,255,.06)}
+
+/* Footer */
+footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+
+<section class="hero">
+<div>
+  <h1>BBAI</h1>
+  <div class="sub">Black Bear AI 🐻</div>
+  <div class="tagline">AI-Powered Buyback & Burn on BSC</div>
+  <div class="btns">
+    <a href="/dashboard/" class="btn btn-primary">View Dashboard</a>
+    <a href="https://t.me/+bj5r2b79s8RiYzQx" class="btn btn-outline" target="_blank">Join Community</a>
+  </div>
+</div>
+</section>
+
+<section id="about">
+<div class="container">
+  <h2>About BBAI</h2>
+  <p style="text-align:center;color:var(--muted);max-width:640px;margin:0 auto 40px">BBAI is an AI-driven vault that uses Flap AI Oracle to make intelligent buyback & burn decisions on BSC.</p>
+  <div class="cards">
+    <div class="card"><div class="icon">🤖</div><h3>AI Oracle</h3><p>Powered by Flap AI Oracle for smart, data-driven decision making</p></div>
+    <div class="card"><div class="icon">🔥</div><h3>Auto Burn</h3><p>Automated buyback and burn mechanism to reduce supply</p></div>
+    <div class="card"><div class="icon">🛡️</div><h3>Transparent</h3><p>Fully open-source and verified on BSCScan</p></div>
+  </div>
+</div>
+</section>
+
+<section id="how" style="background:var(--bg2)">
+<div class="container">
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step"><h3>Deposit</h3><p>BNB flows into the vault from community contributions</p></div>
+    <div class="step"><h3>Analyze</h3><p>AI Oracle evaluates market conditions and timing</p></div>
+    <div class="step"><h3>Execute</h3><p>Smart buyback & burn executes automatically</p></div>
+  </div>
+</div>
+</section>
+
+<section id="stats">
+<div class="container">
+  <h2>Live Stats</h2>
+  <div class="stats">
+    <div class="stat"><div class="val" id="s-bal">—</div><div class="label">Vault BNB Balance</div></div>
+    <div class="stat"><div class="val" id="s-reqs">—</div><div class="label">AI Oracle Requests</div></div>
+    <div class="stat"><div class="val" id="s-status">—</div><div class="label">Vault Status</div></div>
+  </div>
+</div>
+</section>
+
+<section id="competition" style="background:var(--bg2)">
+<div class="container">
+  <h2>🏆 Flap $15K Competition Leaderboard</h2>
+  <p style="text-align:center;color:var(--muted);max-width:640px;margin:0 auto 12px">Live on-chain data — AI Oracle consumers on BSC. Deadline: March 31, 2026</p>
+  <p style="text-align:center;color:var(--muted);font-size:.8rem;margin:0 auto 32px">Data refreshes every 60s · Source: <a href="https://flap.sh/ai/bnb/scan" target="_blank">flap.sh/ai/bnb/scan</a></p>
+  <table class="addr-table" id="comp-table">
+    <tr><th>#</th><th>Project</th><th>Consumer</th><th>Balance</th><th>AI Reqs</th><th>Status</th></tr>
+  </table>
+</div>
+</section>
+
+<section id="contracts" style="background:var(--bg2)">
+<div class="container">
+  <h2>Contracts</h2>
+  <table class="addr-table">
+    <tr><th>Contract</th><th>Address</th></tr>
+    <tr><td>BBAI Token</td><td><a href="https://bscscan.com/token/0xa89500641846D9De787D2C34647730DB49e67777" target="_blank">0xa89500641846D9De787D2C34647730DB49e67777</a></td></tr>
+    <tr><td>V3 Vault</td><td><a href="https://bscscan.com/address/0xdb192b58371ea8f79b79daba169bccb292fae65b" target="_blank">0xdb192b58371ea8f79b79daba169bccb292fae65b</a></td></tr>
+    <tr><td>FlapAIProvider</td><td><a href="https://bscscan.com/address/0xaEe3a7Ca6fe6b53f6c32a3e8407eC5A9dF8B7E39" target="_blank">0xaEe3a7Ca6fe6b53f6c32a3e8407eC5A9dF8B7E39</a></td></tr>
+  </table>
+</div>
+</section>
+
+<section id="community">
+<div class="container">
+  <h2>Community</h2>
+  <div class="links">
+    <a href="https://x.com/miluan1995" target="_blank">𝕏 Twitter</a>
+    <a href="https://t.me/+bj5r2b79s8RiYzQx" target="_blank">💬 Telegram</a>
+    <a href="https://bscscan.com/address/0xdb192b58371ea8f79b79daba169bccb292fae65b" target="_blank">📜 BSCScan</a>
+  </div>
+</div>
+</section>
+
+<footer>
+  <p>Built by Black Bear AI 🐻 | Powered by Flap AI Oracle</p>
+  <p style="margin-top:4px">Part of the Flap $15K Developer Competition</p>
+</footer>
+
+<script>
+const RPC='https://bsc-dataseed1.binance.org';
+const COMPETITORS=[
+  {name:'BBAI (Black Bear AI)',addr:'0xdb192b58371ea8f79b79daba169bccb292fae65b',hasReqs:true,ours:true},
+  {name:'FLAPORACLE',addr:'0x812d7eA19bEaece7F921Cdea36ebc882E4850980',hasReqs:false},
+  {name:'ReTax (还税于民)',addr:'0xa62D3C5BaCB7833c01B7a0dBBAaaD1490C3b21Cc',hasReqs:false},
+  {name:'OracleBet (OBET)',addr:'0x37B2f9F2594696C01dEC1981Cbb54A8bAbF26a0A',hasReqs:true},
+  {name:'FAO (FlapAgent)',addr:'0xc9c1a2c82921C2b33E1C6949e4F7961D0c85eBAb',hasReqs:false},
+];
+async function rpc(m,p){const r=await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:m,params:p})});return(await r.json()).result}
+async function ethBal(a){const b=await rpc('eth_getBalance',[a,'latest']);return parseInt(b,16)/1e18}
+async function getReqs(a){try{const r=await rpc('eth_call',[{to:a,data:'0xd156c384'},'latest']);return r&&r!=='0x'?parseInt(r,16):null}catch(e){return null}}
+async function loadBoard(){
+  const data=[];
+  for(const c of COMPETITORS){
+    const bal=await ethBal(c.addr).catch(()=>0);
+    const reqs=c.hasReqs?await getReqs(c.addr):null;
+    data.push({...c,bal,reqs});
+  }
+  data.sort((a,b)=>b.bal-a.bal);
+  const medals=['🥇','🥈','🥉','4','5','6'];
+  const tb=document.getElementById('comp-table');
+  tb.innerHTML='<tr><th>#</th><th>Project</th><th>Consumer</th><th>Balance</th><th>AI Reqs</th><th>Status</th></tr>';
+  data.forEach((c,i)=>{
+    const alive=c.bal>0.001;
+    const tr=document.createElement('tr');
+    if(c.ours)tr.style.background='rgba(88,224,255,.08)';
+    if(!alive)tr.style.opacity='.5';
+    const short=c.addr.slice(0,6)+'…'+c.addr.slice(-4);
+    tr.innerHTML=`<td>${medals[i]||i+1}</td><td>${c.name}</td><td><a href="https://bscscan.com/address/${c.addr}" target="_blank" style="font-size:.8rem">${short}</a></td><td>${c.bal.toFixed(4)} BNB</td><td>${c.reqs!==null?c.reqs:'—'}</td><td style="color:${alive?'var(--lime)':'var(--danger)'}">${alive?'Active ✅':'Dead ☠️'}</td>`;
+    tb.appendChild(tr);
+  });
+  // update hero stats
+  const ours=data.find(c=>c.ours);
+  if(ours){
+    document.getElementById('s-bal').textContent=ours.bal.toFixed(4)+' BNB';
+    if(ours.reqs!==null)document.getElementById('s-reqs').textContent=ours.reqs;
+    document.getElementById('s-status').textContent='Active ✅';
+  }
+}
+loadBoard();setInterval(loadBoard,60000);
+</script>
+</body>
+</html>
