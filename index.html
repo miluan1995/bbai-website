@@ -170,10 +170,10 @@ footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;b
 const RPC='https://bsc-dataseed1.binance.org';
 const COMPETITORS=[
   {name:'BBAI (Black Bear AI)',addr:'0xdb192b58371ea8f79b79daba169bccb292fae65b',token:'0xa89500641846D9De787D2C34647730DB49e67777',hasReqs:true,ours:true},
-  {name:'FLAPORACLE',addr:'0x812d7eA19bEaece7F921Cdea36ebc882E4850980',token:'0x8a12860f7c24e8573223f47e4189044660527777',hasReqs:false},
-  {name:'ReTax (还税于民)',addr:'0xa62D3C5BaCB7833c01B7a0dBBAaaD1490C3b21Cc',token:'0x11b72373329e67055ced7118cc44ac5fcd697777',hasReqs:false},
+  {name:'FLAPORACLE',addr:'0x812d7eA19bEaece7F921Cdea36ebc882E4850980',token:'0x8a12860f7c24e8573223f47e4189044660527777',hasReqs:true},
+  {name:'ReTax (还税于民)',addr:'0xa62D3C5BaCB7833c01B7a0dBBAaaD1490C3b21Cc',token:'0x11b72373329e67055ced7118cc44ac5fcd697777',hasReqs:true},
   {name:'OracleBet (OBET)',addr:'0x37B2f9F2594696C01dEC1981Cbb54A8bAbF26a0A',token:'0xaec61346c6bb853c7ea09062da5e3e3b96eeffff',hasReqs:true},
-  {name:'FAO (FlapAgent)',addr:'0xc9c1a2c82921C2b33E1C6949e4F7961D0c85eBAb',token:null,hasReqs:false},
+  {name:'FAO (FlapAgent)',addr:'0xc9c1a2c82921C2b33E1C6949e4F7961D0c85eBAb',token:null,hasReqs:true},
 ];
 async function rpc(m,p){const r=await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:m,params:p})});return(await r.json()).result}
 async function ethBal(a){const b=await rpc('eth_getBalance',[a,'latest']);return parseInt(b,16)/1e18}
