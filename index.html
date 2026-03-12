@@ -178,14 +178,16 @@ const COMPETITORS=[
 async function rpc(m,p){const r=await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:m,params:p})});return(await r.json()).result}
 async function ethBal(a){const b=await rpc('eth_getBalance',[a,'latest']);return parseInt(b,16)/1e18}
 async function getReqs(a){try{const r=await rpc('eth_call',[{to:a,data:'0xd156c384'},'latest']);return r&&r!=='0x'?parseInt(r,16):null}catch(e){return null}}
-async function getMcap(token){
-  if(!token)return 0;
+async function getMcaps(){
+  const tokens=COMPETITORS.map(c=>c.token).filter(Boolean);
+  if(!tokens.length)return{};
   try{
-    const r=await fetch('https://web3.binance.com/bapi/defi/v3/public/wallet-direct/buw/wallet/token/search?keyword='+token+'&chainId=56');
+    const r=await fetch('https://api.dexscreener.com/tokens/v1/bsc/'+tokens.join(','));
     const d=await r.json();
-    const t=d?.data?.tokens?.[0];
-    return t?.marketCap?parseFloat(t.marketCap):0;
-  }catch(e){return 0}
+    const m={};
+    for(const p of d){const a=p.baseToken.address.toLowerCase();const mc=p.marketCap||0;if(!m[a]||mc>m[a])m[a]=mc}
+    return m;
+  }catch(e){return{}}
 }
 function renderLoadingState(){
   const tb=document.getElementById('comp-table');
@@ -196,10 +198,11 @@ function updateTimestamp(){
 }
 async function loadBoard(){
   renderLoadingState();
-  const data=await Promise.all(COMPETITORS.map(async c=>{
-    const [bal,reqs,mcap]=await Promise.all([ethBal(c.addr).catch(()=>0),c.hasReqs?getReqs(c.addr):null,getMcap(c.token)]);
-    return{...c,bal,reqs,mcap};
-  }));
+  const [results,mcaps]=await Promise.all([Promise.all(COMPETITORS.map(async c=>{
+    const [bal,reqs]=await Promise.all([ethBal(c.addr).catch(()=>0),c.hasReqs?getReqs(c.addr):null]);
+    return{...c,bal,reqs};
+  })),getMcaps()]);
+  const data=results.map(c=>({...c,mcap:c.token?mcaps[c.token.toLowerCase()]||0:0}));
   data.sort((a,b)=>b.mcap-a.mcap||b.bal-a.bal);
   const medals=['🥇','🥈','🥉','4','5','6'];
   const tb=document.getElementById('comp-table');
