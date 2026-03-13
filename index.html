@@ -190,23 +190,24 @@ const KNOWN={
 async function rpc(m,p){const r=await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:m,params:p})});const j=await r.json();if(j.error)throw j.error;return j.result}
 async function ethBal(a){const b=await rpc('eth_getBalance',[a,'latest']);return parseInt(b,16)/1e18}
 async function getBnbPrice(){try{const r=await fetch('https://api.binance.com/api/v3/avgPrice?symbol=BNBUSDT');return parseFloat((await r.json()).price)}catch(e){return 580}}
-// Scan events from FlapAIProvider, discover all consumers dynamically
+// Scan events from FlapAIProvider in batches (5000 blocks each, 10 batches = ~14h)
 async function scanConsumers(){
   const latest=parseInt(await rpc('eth_blockNumber',[]),16);
   const counts={};
-  // Scan last 50000 blocks (max allowed by public RPC)
-  const from=latest-49999;
-  try{
-    const logs=await rpc('eth_getLogs',[{address:FLAP_PROVIDER,fromBlock:'0x'+from.toString(16),toBlock:'0x'+latest.toString(16),topics:[REQ_TOPIC]}]);
-    if(Array.isArray(logs)){
-      for(const log of logs){
+  const BATCH=5000,BATCHES=10;
+  for(let i=0;i<BATCHES;i++){
+    const to=latest-i*BATCH;
+    const from=to-BATCH+1;
+    try{
+      const logs=await rpc('eth_getLogs',[{address:FLAP_PROVIDER,fromBlock:'0x'+from.toString(16),toBlock:'0x'+to.toString(16),topics:[REQ_TOPIC]}]);
+      if(Array.isArray(logs))for(const log of logs){
         if(log.data&&log.data.length>=130){
           const consumer='0x'+log.data.slice(90,130).toLowerCase();
           counts[consumer]=(counts[consumer]||0)+1;
         }
       }
-    }
-  }catch(e){console.warn('scanConsumers error:',e)}
+    }catch(e){}
+  }
   return counts;
 }
 async function getMcaps(tokens){
@@ -218,11 +219,11 @@ async function getMcaps(tokens){
     const d=await r.json();
     if(Array.isArray(d))for(const p of d){const a=p.baseToken.address.toLowerCase();const mc=p.marketCap||0;if(!m[a]||mc>m[a])m[a]=mc}
   }catch(e){}
-  // GeckoTerminal fallback
+  // GeckoTerminal fallback (parallel)
   const missing=tokens.filter(t=>!m[t.toLowerCase()]);
-  for(const t of missing){
+  await Promise.all(missing.map(async t=>{
     try{const r=await fetch('https://api.geckoterminal.com/api/v2/networks/bsc/tokens/'+t);const d=await r.json();const mc=parseFloat(d?.data?.attributes?.market_cap_usd);if(mc>0)m[t.toLowerCase()]=mc}catch(e){}
-  }
+  }));
   return m;
 }
 function renderLoadingState(){
