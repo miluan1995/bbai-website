@@ -128,7 +128,14 @@ footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;b
 <div class="container">
   <h2>🏆 Flap $15K Competition Leaderboard</h2>
   <p style="text-align:center;color:var(--muted);max-width:640px;margin:0 auto 12px">Live on-chain data — AI Oracle consumers on BSC. Deadline: March 31, 2026</p>
-  <p style="text-align:center;color:var(--muted);font-size:.8rem;margin:0 auto 32px">Data refreshes every 60s · Source: <a href="https://flap.sh/ai/bnb/scan" target="_blank">flap.sh/ai/bnb/scan</a></p>
+  <p style="text-align:center;color:var(--muted);font-size:.8rem;margin:0 auto 24px">Data refreshes every 60s · Source: <a href="https://flap.sh/ai/bnb/scan" target="_blank">flap.sh/ai/bnb/scan</a></p>
+  <div class="bb-summary" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:16px">
+    <div class="stat" style="flex:1;min-width:140px;max-width:200px"><div class="val" id="bb-rank">—</div><div class="label">🏆 Rank</div></div>
+    <div class="stat" style="flex:1;min-width:140px;max-width:200px"><div class="val" style="color:var(--lime)" id="bb-mcap">—</div><div class="label">💰 Market Cap</div></div>
+    <div class="stat" style="flex:1;min-width:140px;max-width:200px"><div class="val" style="color:var(--cyan)" id="bb-reqs">—</div><div class="label">🤖 AI Reqs</div></div>
+    <div class="stat" style="flex:1;min-width:140px;max-width:200px"><div class="val" id="bb-vault">—</div><div class="label">💎 Vault BNB</div></div>
+  </div>
+  <p style="text-align:center;color:var(--muted);font-size:.75rem;margin:0 auto 24px">Ranked by Market Cap · AI Reqs = total AI Oracle calls (competition core metric)</p>
   <div class="table-wrap">
     <table class="addr-table" id="comp-table">
       <tr><th>#</th><th>Project</th><th>Consumer</th><th>Market Cap</th><th>Balance</th><th>AI Reqs</th><th>Status</th></tr>
@@ -214,15 +221,21 @@ async function loadBoard(){
     if(!alive)tr.style.opacity='.5';
     const short=c.addr.slice(0,6)+'…'+c.addr.slice(-4);
     const mcapStr=c.mcap>0?'$'+c.mcap.toLocaleString(undefined,{maximumFractionDigits:0}):'—';
-    tr.innerHTML=`<td>${medals[i]||i+1}</td><td>${c.name}</td><td><a href="https://bscscan.com/address/${c.addr}" target="_blank" style="font-size:.8rem">${short}</a></td><td>${mcapStr}</td><td>${c.bal.toFixed(4)} BNB</td><td>${c.reqs!==null?c.reqs:'—'}</td><td style="color:${alive?'var(--lime)':'var(--danger)'}">${alive?'Active ✅':'Dead ☠️'}</td>`;
+    tr.innerHTML=`<td>${medals[i]||i+1}</td><td>${c.name}</td><td><a href="https://bscscan.com/address/${c.addr}" target="_blank" style="font-size:.8rem">${short}</a></td><td style="color:var(--lime);font-weight:700;font-size:1.1rem">${mcapStr}</td><td>${c.bal.toFixed(4)} BNB</td><td style="color:var(--cyan);font-weight:700;font-size:1.1rem">${c.reqs!==null?c.reqs:'—'}</td><td style="color:${alive?'var(--lime)':'var(--danger)'}">${alive?'Active ✅':'Dead ☠️'}</td>`;
+    if(c.ours)tr.style.borderLeft='3px solid var(--cyan)';
     tb.appendChild(tr);
   });
   // update hero stats
   const ours=data.find(c=>c.ours);
+  const oursIdx=data.findIndex(c=>c.ours);
   if(ours){
     document.getElementById('s-bal').textContent=ours.bal.toFixed(4)+' BNB';
     if(ours.reqs!==null)document.getElementById('s-reqs').textContent=ours.reqs;
     document.getElementById('s-status').textContent=ours.bal>0.001?'Active ✅':'Dead ☠️';
+    document.getElementById('bb-rank').textContent='#'+(oursIdx+1);
+    document.getElementById('bb-mcap').textContent=ours.mcap>0?'$'+ours.mcap.toLocaleString(undefined,{maximumFractionDigits:0}):'—';
+    document.getElementById('bb-reqs').textContent=ours.reqs!==null?ours.reqs:'—';
+    document.getElementById('bb-vault').textContent=ours.bal.toFixed(4)+' BNB';
   }
   updateTimestamp();
 }
