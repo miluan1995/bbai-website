@@ -6,39 +6,42 @@
 <title>BBAI — Black Bear AI</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#060816;--bg2:#0b1023;--panel:rgba(11,16,35,.72);--border:rgba(88,224,255,.24);--text:#e6f7ff;--muted:#7e97b8;--cyan:#58e0ff;--pink:#ff4fd8;--lime:#c9ff4f;--danger:#ff6b7d}
+:root{--bg:#060816;--bg2:#0b1023;--panel:rgba(11,16,35,.78);--border:rgba(240,185,11,.22);--text:#e6f7ff;--muted:#7e97b8;--cyan:#58e0ff;--pink:#ff4fd8;--lime:#c9ff4f;--danger:#ff6b7d;--binance:#F0B90B;--binance-soft:rgba(240,185,11,.14)}
 body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;overflow-x:hidden}
-a{color:var(--cyan);text-decoration:none}
+a{color:var(--binance);text-decoration:none}
 a:hover{text-decoration:underline}
 .container{max-width:960px;margin:0 auto;padding:0 20px}
 
 /* Hero */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 30% 20%,rgba(255,79,216,.12),transparent 40%),radial-gradient(circle at 70% 80%,rgba(88,224,255,.1),transparent 40%)}
-.hero h1{font-size:clamp(3rem,10vw,6rem);font-weight:900;background:linear-gradient(135deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 60px rgba(88,224,255,.3);filter:drop-shadow(0 0 30px rgba(88,224,255,.2))}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 30% 20%,rgba(240,185,11,.14),transparent 42%),radial-gradient(circle at 70% 80%,rgba(88,224,255,.1),transparent 40%),linear-gradient(180deg,#060816 0%,#0b1023 100%)}
+.hero h1{font-size:clamp(3rem,10vw,6rem);font-weight:900;background:linear-gradient(135deg,var(--binance),#ffd866 45%,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 60px rgba(240,185,11,.22);filter:drop-shadow(0 0 30px rgba(240,185,11,.18))}
 .hero .sub{font-size:1.1rem;color:var(--muted);margin:8px 0 4px}
+.hero .micro{font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:var(--binance);margin-bottom:14px}
 .hero .tagline{font-size:1.3rem;color:var(--text);margin-bottom:32px}
 .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn{padding:12px 28px;border-radius:8px;font-weight:600;font-size:1rem;border:none;cursor:pointer;transition:.2s}
-.btn-primary{background:linear-gradient(135deg,var(--cyan),var(--pink));color:#060816}
-.btn-outline{background:transparent;border:1.5px solid var(--cyan);color:var(--cyan)}
-.btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(88,224,255,.3)}
+.btn-primary{background:linear-gradient(135deg,var(--binance),#ffd866);color:#060816}
+.btn-outline{background:transparent;border:1.5px solid var(--binance);color:var(--binance)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(240,185,11,.28)}
+.btn-primary:hover{background:linear-gradient(135deg,#ffd866,var(--binance))}
+.btn-outline:hover{background:var(--binance-soft);border-color:#ffd866;color:#ffd866;text-decoration:none}
 
 /* Sections */
 section{padding:80px 0}
-section h2{font-size:2rem;text-align:center;margin-bottom:48px;background:linear-gradient(90deg,var(--cyan),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+section h2{font-size:2rem;text-align:center;margin-bottom:48px;background:linear-gradient(90deg,var(--text),var(--binance));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 
 /* About */
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
 .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:28px;text-align:center;transition:.3s}
-.card:hover{border-color:var(--cyan);transform:translateY(-4px);box-shadow:0 0 30px rgba(88,224,255,.12)}
+.card:hover{border-color:var(--binance);transform:translateY(-4px);box-shadow:0 0 30px rgba(240,185,11,.12)}
 .card .icon{font-size:2.4rem;margin-bottom:12px}
-.card h3{color:var(--cyan);margin-bottom:8px}
+.card h3{color:var(--binance);margin-bottom:8px}
 .card p{color:var(--muted);font-size:.95rem}
 
 /* How it works */
 .steps{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;counter-reset:step}
 .step{flex:1;min-width:200px;max-width:280px;text-align:center;position:relative;padding:24px}
-.step::before{counter-increment:step;content:counter(step);display:block;width:48px;height:48px;line-height:48px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--pink));color:var(--bg);font-weight:700;font-size:1.2rem;margin:0 auto 16px}
+.step::before{counter-increment:step;content:counter(step);display:block;width:48px;height:48px;line-height:48px;border-radius:50%;background:linear-gradient(135deg,var(--binance),#ffd866);color:var(--bg);font-weight:700;font-size:1.2rem;margin:0 auto 16px}
 .step h3{margin-bottom:8px}
 .step p{color:var(--muted);font-size:.9rem}
 
@@ -51,7 +54,7 @@ section h2{font-size:2rem;text-align:center;margin-bottom:48px;background:linear
 /* Addresses */
 .addr-table{width:100%;border-collapse:collapse}
 .addr-table th,.addr-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
-.addr-table th{color:var(--cyan);font-size:.85rem;text-transform:uppercase}
+.addr-table th{color:var(--binance);font-size:.85rem;text-transform:uppercase}
 .addr-table td{font-family:'Courier New',monospace;font-size:.85rem;word-break:break-all}
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
 .addr-table tr{transition:background-color .2s ease}
@@ -67,7 +70,7 @@ section h2{font-size:2rem;text-align:center;margin-bottom:48px;background:linear
 /* Community */
 .links{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 .links a{display:inline-block;padding:12px 24px;border:1px solid var(--border);border-radius:8px;transition:.2s}
-.links a:hover{border-color:var(--cyan);background:rgba(88,224,255,.06)}
+.links a:hover{border-color:var(--binance);background:var(--binance-soft)}
 
 /* Footer */
 footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--border)}
@@ -82,6 +85,7 @@ footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;b
 <div>
   <h1>BBAI</h1>
   <div class="sub">Black Bear AI 🐻</div>
+  <div class="micro">Built for Binance Smart Chain | Powered by Binance Skills Hub</div>
   <div class="tagline">AI-Powered Buyback & Burn on BSC</div>
   <div class="btns">
     <a href="#stats" class="btn btn-primary">Live Stats</a>
@@ -98,6 +102,7 @@ footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;b
     <div class="card"><div class="icon">🤖</div><h3>AI Oracle</h3><p>Powered by Flap AI Oracle for smart, data-driven decision making</p></div>
     <div class="card"><div class="icon">🔥</div><h3>Auto Burn</h3><p>Automated buyback and burn mechanism to reduce supply</p></div>
     <div class="card"><div class="icon">🛡️</div><h3>Transparent</h3><p>Fully open-source and verified on BSCScan</p></div>
+    <div class="card"><div class="icon">🟡</div><h3>Binance Ecosystem</h3><p>Integrated with Binance Skills Hub, including token-audit, trading-signal, address-info and other BSC-native agent capabilities.</p></div>
   </div>
 </div>
 </section>
@@ -170,6 +175,7 @@ footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:.85rem;b
 <footer>
   <p>Built by Black Bear AI 🐻 | Powered by Flap AI Oracle</p>
   <p style="margin-top:4px">Part of the Flap $15K Developer Competition</p>
+  <p style="margin-top:4px;color:var(--binance)">Part of Binance × OpenClaw AI Agent Competition 2026</p>
   <p id="last-updated" style="margin-top:4px">Last updated: —</p>
 </footer>
 
