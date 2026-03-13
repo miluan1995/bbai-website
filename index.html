@@ -186,27 +186,41 @@ const KNOWN={
   '0x00456139d993cc48029f431f73f17a0f219f71b3':{name:'Unknown-0045'},
   '0x88a78dcc87cda061d966b51074c7dc9e153eaff3':{name:'Unknown-88a7'},
   '0x9e2071680d99a8c020f52ac3e98346f6b70d85f6':{name:'Unknown-9e20'},
+  '0x7c31573a2acfd3b7ce8952309c20ed6e4af4b4c5':{name:'Luna Agent'},
+  '0xf89944b507a0f73656a01cd553cc2bdcc7792c22':{name:'TreasureBox',token:'0xc8abe9dc957e24475a50c0bb3e086ae749c37777'},
 };
 async function rpc(m,p){const r=await fetch(RPC,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:m,params:p})});const j=await r.json();if(j.error)throw j.error;return j.result}
 async function ethBal(a){const b=await rpc('eth_getBalance',[a,'latest']);return parseInt(b,16)/1e18}
 async function getBnbPrice(){try{const r=await fetch('https://api.binance.com/api/v3/avgPrice?symbol=BNBUSDT');return parseFloat((await r.json()).price)}catch(e){return 580}}
-// Scan events from FlapAIProvider in batches (5000 blocks each, 10 batches = ~14h)
+// Baseline from flap.sh (2026-03-13 20:50 UTC+8, block ~86353000)
+const BASELINE_BLOCK=86353000;
+const BASELINE={
+  '0xce7fe756039429f475bcf9db521050c32fe25b96':111,
+  '0xdb192b58371ea8f79b79daba169bccb292fae65b':47,
+  '0x812d7ea19beaece7f921cdea36ebc882e4850980':95,
+  '0x176a0a64505762d369686bcb58476703b8a3e534':4,
+  '0xf89944b507a0f73656a01cd553cc2bdcc7792c22':3,
+  '0x00456139d993cc48029f431f73f17a0f219f71b3':1,
+  '0x88a78dcc87cda061d966b51074c7dc9e153eaff3':1,
+  '0x9e2071680d99a8c020f52ac3e98346f6b70d85f6':1,
+  '0x7c31573a2acfd3b7ce8952309c20ed6e4af4b4c5':1,
+};
+// Scan recent blocks for incremental requests since baseline
 async function scanConsumers(){
   const latest=parseInt(await rpc('eth_blockNumber',[]),16);
-  const counts={};
-  const BATCH=5000,BATCHES=10;
-  for(let i=0;i<BATCHES;i++){
-    const to=latest-i*BATCH;
-    const from=to-BATCH+1;
-    try{
-      const logs=await rpc('eth_getLogs',[{address:FLAP_PROVIDER,fromBlock:'0x'+from.toString(16),toBlock:'0x'+to.toString(16),topics:[REQ_TOPIC]}]);
-      if(Array.isArray(logs))for(const log of logs){
-        if(log.data&&log.data.length>=130){
-          const consumer='0x'+log.data.slice(90,130).toLowerCase();
-          counts[consumer]=(counts[consumer]||0)+1;
-        }
-      }
-    }catch(e){}
+  const counts={...BASELINE};
+  const BATCH=5000;
+  const from=BASELINE_BLOCK+1;
+  const ranges=[];
+  for(let f=from;f<=latest;f+=BATCH)ranges.push([f,Math.min(f+BATCH-1,latest)]);
+  const results=await Promise.all(ranges.map(([f,t])=>
+    rpc('eth_getLogs',[{address:FLAP_PROVIDER,fromBlock:'0x'+f.toString(16),toBlock:'0x'+t.toString(16),topics:[REQ_TOPIC]}]).catch(()=>[])
+  ));
+  for(const logs of results)if(Array.isArray(logs))for(const log of logs){
+    if(log.data&&log.data.length>=130){
+      const c='0x'+log.data.slice(90,130).toLowerCase();
+      counts[c]=(counts[c]||0)+1;
+    }
   }
   return counts;
 }
