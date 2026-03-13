@@ -249,11 +249,11 @@ async function loadBoard(){
   for(const [key,m] of Object.entries(merged)){
     const info=m.info||{};
     const primaryAddr=m.addrs.find(a=>KNOWN[a]?.primary)||m.addrs.find(a=>KNOWN[a]?.ours)||m.addrs[0];
-    projects.push({name:info.name||('Consumer '+primaryAddr.slice(0,8)),addr:primaryAddr,token:info.token||null,ours:!!info.ours,reqs:m.reqs});
+    projects.push({name:info.name||('Consumer '+primaryAddr.slice(0,8)),addr:primaryAddr,addrs:m.addrs,token:info.token||null,ours:!!info.ours,reqs:m.reqs});
   }
   // Fetch balances + mcaps in parallel
   const [bals,mcaps]=await Promise.all([
-    Promise.all(projects.map(p=>ethBal(p.addr).catch(()=>0))),
+    Promise.all(projects.map(p=>Promise.all(p.addrs.map(a=>ethBal(a).catch(()=>0))).then(bs=>bs.reduce((s,v)=>s+v,0)))),
     getMcaps([...new Set(projects.map(p=>p.token).filter(Boolean))])
   ]);
   const data=projects.map((p,i)=>({...p,bal:bals[i],mcap:p.token?mcaps[p.token.toLowerCase()]||0:0}));
